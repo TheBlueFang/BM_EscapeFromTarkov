@@ -1,15 +1,6 @@
-class CfgFunctions
+class cfgFunctions
 {
-	class BM
-	{
-		class Loadouts
-		{
-			class spawnUnit {};
-			class addMagazines {};
-			class randomLoadout {};
-			class convertEdenUnits {};
-		};
-	};
+	#include "Loadouts\loadoutFunctions.hpp"
 };
 
 class Params

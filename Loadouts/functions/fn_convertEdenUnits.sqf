@@ -6,7 +6,7 @@
 
 {
 	if (typeOf _x in USED_UNITS) THEN {
-		_x call BM_fnc_spawnUnit;
+		_x call BM_fnc_setLoadout;
 	};
 } forEach allUnits;
 
