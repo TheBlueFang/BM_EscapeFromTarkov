@@ -5,14 +5,18 @@
 	OUTPUT: true, function ran successfully; type Boolean
 */
 
-_unit = param [0, objNull, [objNull]];
+params [
+	["_unit", objNull, [objNull]],
+	["_type", "", ["string"]]
+];
+
 if (isNull _unit) exitWith {};
 
 // Set variable scope
 private["_type"];
 
-// Find the unit type and use that to define the loadout type
-if (typeOf _unit in USED_UNITS) then {
+// If type wasn't given then find it based on the unit and use that to define the loadout type
+if (_type == "" and typeOf _unit in USED_UNITS) then {
 	_unitType = USED_UNITS select (USED_UNITS find (typeOf _unit));
 
 	if ("akm" in _unitType) then {
@@ -34,5 +38,5 @@ _unit setUnitLoadout _loadout;
 
 // Skip bosses
 if (_type != "boss") then {
-	[_unit] call BM_fnc_addMagazines;
+	_unit call BM_fnc_addMagazines;
 };
