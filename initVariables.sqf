@@ -1,5 +1,14 @@
 BM_DEBUG = true;
+
+
+//////// ARTIFCIAL INTELLIGENCE ////////
+BI_DYNAMIC_SIMULATION = true;
 AI_SPAWN_BLACKLIST = ["Blacklist1", "Blacklist2", "Blacklist3"];
+GUNFIRE_DETECTION_RANGE = 2000;
+HEAR_CHANCE = 15; //The chance that scavengers will react to hearing gunfire (precentage)
+
+SCAV_GROUP_SIZE = [2,8];
+
 
 //////// LOADOUTS ////////
 

@@ -13,5 +13,6 @@ class BM
 		class drawSettlementCircle {};
 
 		class weaponFired {};
+		class spawnGroup {};
 	};
 };
