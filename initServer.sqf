@@ -1,4 +1,6 @@
 MAP_ANALYSED = false;
+DYNAMIC_GROUPS = [];
+
 _handle = execVM "initVariables.sqf";
 waitUntil{scriptDone _handle};
 

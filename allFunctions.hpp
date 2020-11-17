@@ -11,5 +11,7 @@ class BM
 		class analyseMap {};
 		class inSettlement {};
 		class drawSettlementCircle {};
+
+		class weaponFired {};
 	};
 };
