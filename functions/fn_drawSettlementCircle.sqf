@@ -25,8 +25,6 @@ _maxY = 0;
 
 } forEach _houses;
 
-hint format ["%1, %2 ; %3, %4", _minX, _maxX, _minY, _maxY];
-
 _markerPos = [(_minX + _maxX) / 2, (_minY + _maxY) / 2, 0];
 _markerstr = createMarker [str _markerPos, _markerPos];
 _markerstr setMarkerShape "ELLIPSE";
