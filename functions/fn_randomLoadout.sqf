@@ -13,15 +13,15 @@ private["_loadout", "_magClasses"];
 _primary = "";
 _secondary = "";
 
-// Randomise clothing
-_clothing = selectRandom SCAV_CLOTHING;
-_vest = selectRandom SCAV_VESTS;
-_helmet = selectRandom SCAV_HELMETS;
-_backpack = selectRandom SCAV_BACKPACKS;
-_face = selectRandom SCAV_FACE;
-
 // IF THE UNIT IS A CHDKZ RIFLEMAN (AKM)
 if (_type == "scav") then {
+	// Randomise clothing
+	_clothing = selectRandom SCAV_CLOTHING;
+	_vest = selectRandom SCAV_VESTS;
+	_helmet = selectRandom SCAV_HELMETS;
+	_backpack = selectRandom SCAV_BACKPACKS;
+	_face = selectRandom SCAV_FACE;
+
 	//Randomise either a primary weapon or a secondary, percentage. Default: 20
 	if ((floor random 101) <= 30) then {
 		_secondary = selectRandom SCAV_SECONDARIES;
@@ -45,6 +45,12 @@ if (_type == "scav") then {
 
 // HEAVY SCAV
 if (_type == "scav_heavy") then {
+	// Randomise clothing
+	_clothing = selectRandom SCAV_CLOTHING;
+	_vest = selectRandom SCAV_VESTS;
+	_helmet = selectRandom SCAV_HELMETS;
+	_backpack = selectRandom SCAV_BACKPACKS;
+	_face = selectRandom SCAV_FACE;
 
 	//Heavy scavs always have a primary
 	_primary = selectRandom SCAV_PRIMARIES;
@@ -71,5 +77,29 @@ if (_type == "boss") then {
 	_unit setName "Killa";
 };
 
+// USEC
+if (_type == "USEC") then {
+	// Randomise clothing
+	_clothing = selectRandom USEC_CLOTHING;
+	_vest = selectRandom USEC_VESTS;
+	_helmet = selectRandom USEC_HELMETS;
+	_backpack = selectRandom USEC_BACKPACKS;
+	_face = selectRandom USEC_FACE;
+
+	_primary = selectRandom USEC_PRIMARIES;
+
+	// Consolidate loadout into one variable
+	_loadout =
+	[
+		/* primary weapon */	[_primary, "", "", "", [], [], ""],
+		/* launcher */			["", "", "", "", [], [], ""],
+		/* handgun weapon */	["", "", "", "", [], [], ""],
+		/* uniform */			[_clothing, [["FirstAidKit", floor random 3]]],
+		/* vest */				[_vest, []],
+		/* backpack */			[_backpack,[]],
+		/* items */				_helmet, _face,[],
+		/* items */				["ItemMap","","","ItemCompass","ItemWatch",""]
+	];
+};
 // Return value
 _loadout

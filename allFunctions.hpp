@@ -2,11 +2,11 @@ class BM
 {
 	class fnc
 	{
-		file = "Loadouts\functions";
-
+		file = "functions";
 		class setLoadout {};
 		class addMagazines {};
 		class randomLoadout {};
 		class convertEdenUnits {};
+		
 	};
 };

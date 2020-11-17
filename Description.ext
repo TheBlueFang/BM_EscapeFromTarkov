@@ -1,6 +1,6 @@
 class cfgFunctions
 {
-	#include "Loadouts\loadoutFunctions.hpp"
+	#include "AllFunctions.hpp"
 };
 
 class Params

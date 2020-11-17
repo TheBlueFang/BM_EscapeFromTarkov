@@ -17,7 +17,8 @@ private["_type"];
 
 // If type wasn't given then find it based on the unit and use that to define the loadout type
 if (_type == "" and typeOf _unit in USED_UNITS) then {
-	_unitType = USED_UNITS select (USED_UNITS find (typeOf _unit));
+	_index = USED_UNITS find (typeOf _unit);
+	_unitType = USED_UNITS select _index;
 
 	if ("akm" in _unitType) then {
 		_type = "scav";
@@ -29,6 +30,10 @@ if (_type == "" and typeOf _unit in USED_UNITS) then {
 
 	if ("squadleader" in _unitType) then {
 		_type = "boss";
+	};
+
+	if ("army" in _unitType && "rifleman" in _unitType && "rhsusf" in _unitType) then {
+		_type = "USEC";
 	};
 
 };
