@@ -8,5 +8,7 @@ class BM
 		class randomLoadout {};
 		class convertEdenUnits {};
 		
+		class analyzeMap {};
+		class inSettlement {};
 	};
 };
