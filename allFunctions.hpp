@@ -10,5 +10,6 @@ class BM
 		
 		class analyzeMap {};
 		class inSettlement {};
+		class drawSettlementCircle {};
 	};
 };
