@@ -94,17 +94,19 @@ for "_w" from _squareSize / 2 to _wSize + _squareSize step 1000 do {
 
 if (BM_DEBUG) then {diag_log format ["BM_fnc_analyzeMap | COMPLETE: Analysis finished. Total settlements: %1.", count ALLSETTLEMENTS];};
 if (BM_DEBUG) then {diag_log format ["BM_fnc_analyzeMap | STARTING: Adding debug markers", count ALLSETTLEMENTS];};
-_colors = ["ColorBlack", "ColorGrey", "ColorRed", "ColorBrown", "ColorOrange", "ColorYellow", "ColorKhaki", "ColorGreen", "ColorBlue", "ColorPink", "ColorWhite"];
 
-{
-	_color = selectRandom _colors;
+if (BM_DEBUG) then {
+	_colors = ["ColorBlack", "ColorGrey", "ColorRed", "ColorBrown", "ColorOrange", "ColorYellow", "ColorKhaki", "ColorGreen", "ColorBlue", "ColorPink", "ColorWhite"];
 	{
-		_pos = getPos _x;
-		_markerstr = createMarker [str _pos, _pos];
-		_markerstr setMarkerType "mil_dot";
-		_markerstr setMarkerColor _color;
-	} forEach _x;
-} forEach ALLSETTLEMENTS;
+		_color = selectRandom _colors;
+		{
+			_pos = getPos _x;
+			_markerstr = createMarker [str _pos, _pos];
+			_markerstr setMarkerType "mil_dot";
+			_markerstr setMarkerColor _color;
+		} forEach _x;
+	} forEach ALLSETTLEMENTS;
+};
 
 if (BM_DEBUG) then {diag_log format ["BM_fnc_analyzeMap | COMPLETE: Debug markers added.", count ALLSETTLEMENTS];};
 
