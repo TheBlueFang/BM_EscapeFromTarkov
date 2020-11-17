@@ -37,47 +37,65 @@ for "_w" from _squareSize / 2 to _wSize + _squareSize step 1000 do {
 				_house = _x;
 				_pos = getPos _house;
 				
-				// If no settlements have been established yet (first house in the map) -> Skip checking
-				if (ALLSETTLEMENTS isEqualTo []) then {
-					_newSettlement pushBack _house;
-					if (BM_DEBUG) then {diag_log format ["BM_fnc_analyzeMap | House %1 was the first house to be analyzed. Pushed into newSettlement.", _house];};
-				} else {
-					//If house is already in a settlement then skip, if house isn't in one then continue
-					if (!((_house call BM_fnc_inSettlement) select 0)) then {
-						// Check all nearby houses and their settlements in order starting from the closest
+				//// BLACKLIST ////
+
+				//Hide blacklist markers 
+				{
+					_x setMarkerAlpha 0;
+				} forEach AI_SPAWN_BLACKLIST;
+
+				// Check if area is blacklisted in initVariables.sqf
+				_inBlacklist = false;
+				if (!(AI_SPAWN_BLACKLIST isEqualTo [])) then {
+					{
+						if (_house inArea _x) exitWith {_inBlacklist = true};
+					} forEach AI_SPAWN_BLACKLIST;
+				};
+				
+				//// CHECK HOUSE ////
+				if (!_inBlacklist) then {
+
+					// If no settlements have been established yet (first house in the map) -> Skip checking
+					if (ALLSETTLEMENTS isEqualTo []) then {
+						_newSettlement pushBack _house;
+						if (BM_DEBUG) then {diag_log format ["BM_fnc_analyzeMap | House %1 was the first house to be analyzed. Pushed into newSettlement.", _house];};
+					} else {
+						//If house is already in a settlement then skip, if house isn't in one then continue
+						if (!((_house call BM_fnc_inSettlement) select 0)) then {
+							// Check all nearby houses and their settlements in order starting from the closest
 							_nearHouses = nearestTerrainObjects [_pos, ["BUILDING", "HOUSE", "FUELSTATION"], _settlementRadius, true, true];
 
-						// If there are no houses nearby then simply add it to the new array
-						if (_nearHouses isEqualTo []) then {
-							_newSettlement pushBack _house;
-							if (BM_DEBUG) then {diag_log format ["BM_fnc_analyzeMap | House %1 didn't have buildings near it. Pushed into newSettlement", _house];};
-						} else { //For each house near the current one, check if they belong to a settlement
+							// If there are no houses nearby then simply add it to the new array
+							if (_nearHouses isEqualTo []) then {
+								_newSettlement pushBack _house;
+								if (BM_DEBUG) then {diag_log format ["BM_fnc_analyzeMap | House %1 didn't have buildings near it. Pushed into newSettlement", _house];};
+							} else { //For each house near the current one, check if they belong to a settlement
 
 								_houseAdded = false;
-							{
-								_nearHouse = _x;
-								_check = _nearHouse call BM_fnc_inSettlement; //Check if in settlement and store results
+								{
+									_nearHouse = _x;
+									_check = _nearHouse call BM_fnc_inSettlement; //Check if in settlement and store results
 
-								// If a nearby house is already in a settlement
+									// If a nearby house is already in a settlement
 									if (_check select 0) exitWith {
-									_index = (_check select 1) select 0;
-									_settlement = ALLSETTLEMENTS select _index;
+										_index = (_check select 1) select 0;
+										_settlement = ALLSETTLEMENTS select _index;
 
-									_settlement pushBackUnique _house; //Pushback the house we were originally checking into the nearby house's settlement and exit the forEach loop
-
+										_settlement pushBackUnique _house; //Pushback the house we were originally checking into the nearby house's settlement and exit the forEach loop
+										
 										_houseAdded = true;
-									if (BM_DEBUG) then {diag_log format ["BM_fnc_analyzeMap | House %1 pushed into existing settlement at index %1", _house, _index];};
-								};
+										if (BM_DEBUG) then {diag_log format ["BM_fnc_analyzeMap | House %1 pushed into existing settlement at index %1", _house, _index];};
+									};
 								} forEach _nearHouses;
 
 								if (!_houseAdded) then {
 										_newSettlement pushBack _house
 								};
+							};
+							if (BM_DEBUG) then {diag_log format ["BM_fnc_analyzeMap | ERROR: House %1 was skipped. House somehow squeezed itself through the algorithm. GO FIX IT!", _house, _index];};
 						};
-						if (BM_DEBUG) then {diag_log format ["BM_fnc_analyzeMap | ERROR: House %1 was skipped. House somehow squeezed itself through the algorithm. GO FIX IT!", _house, _index];};
+						if (BM_DEBUG) then {diag_log format ["BM_fnc_analyzeMap | House %1 was already in a settlement. House skipped", _house];};
 					};
-					if (BM_DEBUG) then {diag_log format ["BM_fnc_analyzeMap | House %1 was already in a settlement. House skipped", _house];};
-				};
 				};
 			} forEach _objects; //For each building found in the chunk
 		};

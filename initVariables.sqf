@@ -1,4 +1,5 @@
 BM_DEBUG = true;
+AI_SPAWN_BLACKLIST = ["Blacklist1", "Blacklist2", "Blacklist3"];
 
 //////// LOADOUTS ////////
 
